@@ -200,6 +200,7 @@ h1{font-size:clamp(48px,5vw,68px)}
 </div>
 <div class="card">
 <div class="head"><h2>Участники</h2><button class="mini" id="expP">Экспорт</button></div>
+<div class="field"><input id="q" type="search" placeholder="Поиск по имени, e-mail или коду"></div>
 <ul id="plist" class="scroll"></ul>
 </div>
 </div></section>
@@ -412,7 +413,8 @@ function admin(){
   $('#alist').innerHTML = adm.acc.slice(0, 100).map(h => `<li class="row"><span>${esc(h.u.name)}<small>${esc(h.text)} · ${fmt(h.date)}</small></span><b class="pos">${amount(h)}</b></li>`).join('') || '<li class="empty">Нет начислений за выбранный период</li>';
 
   adm.us = us.sort((a, b) => born(b) - born(a));
-  $('#plist').innerHTML = adm.us.map(u => `<li class="row"><span>${esc(u.name)}${u.blocked ? ' <span class="tag bad">Заблокирован</span>' : ''}<small>${u.code} · друзей: ${u.friends.length} · ${bal(u)} баллов</small></span><button class="mini${u.blocked ? '' : ' red'}" data-b="${u.code}">${u.blocked ? 'Разблокировать' : 'Заблокировать'}</button></li>`).join('');
+  const q = $('#q').value.trim().toLowerCase();
+  $('#plist').innerHTML = adm.us.filter(u => (u.name + ' ' + u.email + ' ' + u.code).toLowerCase().includes(q)).map(u => `<li class="row"><span>${esc(u.name)}${u.blocked ? ' <span class="tag bad">Заблокирован</span>' : ''}<small>${u.code} · друзей: ${u.friends.length} · ${bal(u)} баллов</small></span><button class="mini${u.blocked ? '' : ' red'}" data-b="${u.code}">${u.blocked ? 'Разблокировать' : 'Заблокировать'}</button></li>`).join('') || '<li class="empty">Никого не найдено</li>';
 }
 
 function csv(head, rows, name){
@@ -424,7 +426,7 @@ function csv(head, rows, name){
   setTimeout(() => URL.revokeObjectURL(a.href), 1000);
 }
 
-$('#from').onchange = $('#to').onchange = admin;
+$('#from').onchange = $('#to').onchange = $('#q').oninput = admin;
 $('#fReset').onclick = () => { $('#from').value = $('#to').value = ''; admin() };
 $('#expA').onclick = () => csv(['Дата', 'Участник', 'E-mail', 'Начисление', 'Баллы'], adm.acc.map(h => [new Date(h.date).toLocaleString('ru-RU'), h.u.name, h.u.email, h.text, h.sum]), 'accruals.csv');
 $('#expP').onclick = () => csv(['Имя', 'E-mail', 'Телефон', 'Код', 'Регистрация', 'Пригласил (код)', 'Друзей', 'Покупок друзей', 'Баллов', 'Статус'], adm.us.map(u => [u.name, u.email, u.phone, u.code, new Date(born(u)).toLocaleString('ru-RU'), u.ref || '', u.friends.length, bought(u), bal(u), u.blocked ? 'Заблокирован' : 'Активен']), 'participants.csv');
