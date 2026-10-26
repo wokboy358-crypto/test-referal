@@ -1,0 +1,486 @@
+<!doctype html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f8f5ff">
+<title>Бонусы друзей</title>
+<style>
+:root{--p:#7a1fff;--g:linear-gradient(135deg,#7a1fff,#c026d3 55%,#ff4fa3);--t:#1c1030;--m:#6e6585;--l:rgba(60,30,110,.1)}
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+[hidden]{display:none!important}
+body{font-family:-apple-system,BlinkMacSystemFont,"SF Pro Display","Segoe UI",Roboto,sans-serif;color:var(--t);background:#f8f5ff;min-height:100vh;overflow-x:hidden;line-height:1.4;-webkit-font-smoothing:antialiased}
+body::before{content:"";position:fixed;inset:-20%;z-index:-1;background:radial-gradient(50% 45% at 12% 10%,rgba(176,124,255,.45),transparent 70%),radial-gradient(45% 45% at 92% 18%,rgba(255,150,215,.35),transparent 70%),radial-gradient(55% 50% at 80% 95%,rgba(150,100,255,.35),transparent 70%),radial-gradient(45% 45% at 5% 90%,rgba(220,150,255,.3),transparent 70%);will-change:transform;animation:flow 22s ease-in-out infinite alternate}
+@keyframes flow{from{transform:translate(-3%,-2%) scale(1)}to{transform:translate(3%,2%) scale(1.1) rotate(10deg)}}
+@media(prefers-reduced-motion){body::before{animation:none}}
+a{color:inherit;text-decoration:none}
+ul{list-style:none}
+.wrap{max-width:1120px;margin:0 auto;padding:0 20px}
+.wrap>*+*,.hero>*+*{margin-top:14px}
+section{padding:56px 0 130px}
+h1{font-size:clamp(34px,9vw,48px);line-height:1.05;letter-spacing:-.03em;font-weight:800}
+h1 span{background:var(--g);-webkit-background-clip:text;background-clip:text;-webkit-text-fill-color:transparent}
+.brand{display:inline-block;padding:7px 14px;border-radius:999px;background:rgba(122,31,255,.1);color:var(--p);font-size:14px;font-weight:600}
+h2{font-size:20px;font-weight:700;letter-spacing:-.02em;margin-bottom:14px}
+.lead{color:var(--m);font-size:17px;margin:10px 0 8px}
+.card .lead{font-size:15px;margin:0 0 14px}
+.card{background:rgba(255,255,255,.85);border:1px solid rgba(122,31,255,.08);border-radius:28px;padding:22px;box-shadow:0 8px 30px rgba(110,60,200,.1)}
+.btn{display:inline-flex;align-items:center;justify-content:center;background:var(--g);color:#fff;border:0;border-radius:999px;padding:16px 28px;font-family:inherit;font-size:17px;font-weight:600;cursor:pointer;box-shadow:0 8px 22px rgba(160,30,220,.4);transition:transform .15s}
+.btn:active{transform:scale(.96)}
+.btn.ghost{background:rgba(122,31,255,.12);color:var(--p);box-shadow:none}
+.btn.full{width:100%}
+.btn.tg{background:rgba(42,171,238,.14);color:#1b8ccc;box-shadow:none}
+.btn.wa{background:rgba(37,211,102,.16);color:#14994b;box-shadow:none}
+.step{display:flex;gap:14px;align-items:center;padding:14px 0;border-bottom:1px solid var(--l)}
+.step:first-child{padding-top:0}
+.step:last-child{padding-bottom:0;border:0}
+.step b{flex:none;display:grid;place-items:center;width:46px;height:46px;border-radius:14px;background:var(--g);color:#fff;font-size:19px;box-shadow:0 6px 14px rgba(160,30,220,.35)}
+.step h3{font-size:17px;font-weight:700;letter-spacing:-.01em}
+.step p{color:var(--m);font-size:14px}
+input{width:100%;font-family:inherit;font-size:17px;padding:15px 16px;border:0;border-radius:14px;background:rgba(118,118,128,.12);color:var(--t);outline:none;transition:.2s}
+input:focus{background:#fff;box-shadow:0 0 0 2px var(--p)}
+label{display:block;font-size:13px;font-weight:600;color:var(--m);margin:0 4px 6px}
+.field{margin-bottom:14px}
+.lwrap{display:grid;gap:18px;align-items:center}
+.codebox{display:flex;gap:12px;align-items:center;justify-content:space-between;flex-wrap:wrap;padding:14px 16px;border-radius:18px;background:rgba(122,31,255,.08)}
+.codebox small{display:block;color:var(--m);font-size:13px;font-weight:600}
+.code{font:700 26px ui-monospace,SFMono-Regular,Consolas,monospace;letter-spacing:.12em;color:var(--p)}
+.codebox .btn{padding:13px 22px;font-size:15px}
+.url{margin:10px 4px 0;color:var(--m);font-size:13px;word-break:break-all}
+.share{display:flex;gap:10px;flex-wrap:wrap;margin-top:14px}
+.share .btn{flex:1 1 180px;padding:13px 18px;font-size:15px}
+.qr{width:180px;padding:12px;background:#fff;border-radius:18px;margin:0 auto;box-shadow:0 4px 18px rgba(110,60,200,.15)}
+.qr:empty{display:none}
+.qr svg{width:100%;height:auto;display:block}
+.stats{display:grid;gap:14px;grid-template-columns:1fr 1fr}
+.stat{padding:18px 20px}
+.stat small{color:var(--m);font-size:13px;font-weight:600}
+.stat strong{display:block;font-size:36px;font-weight:800;letter-spacing:-.03em;margin-top:2px}
+.stat.acc{background:var(--g);color:#fff;border:0}
+.stat.acc small{color:#ffe6f6}
+.row{display:flex;justify-content:space-between;align-items:center;gap:12px;padding:12px 0;border-bottom:1px solid var(--l);font-size:16px;font-weight:600}
+.row:last-child{border:0;padding-bottom:0}
+.row small{display:block;color:var(--m);font-size:13px;font-weight:400}
+.tag{background:rgba(122,31,255,.12);color:var(--p);border-radius:999px;padding:5px 12px;font-size:13px;font-weight:600;white-space:nowrap}
+.act{display:flex;gap:8px;align-items:center;justify-content:flex-end;flex-wrap:wrap}
+.mini{border:0;cursor:pointer;background:var(--g);color:#fff;border-radius:999px;padding:6px 12px;font-family:inherit;font-size:13px;font-weight:600;transition:transform .15s}
+.mini:active{transform:scale(.94)}
+.head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}
+.head h2{margin:0}
+.filters{display:flex;gap:10px;align-items:flex-end;margin-bottom:12px}
+.filters>div{flex:1}
+.filters input{font-size:15px;padding:12px}
+.scroll{max-height:420px;overflow-y:auto;margin:0 -6px;padding:0 6px}
+.bars{display:flex;gap:8px;height:230px}
+.bar{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;min-width:0}
+.bar span{font-size:13px;font-weight:700}
+.bar small{font-size:11px;color:var(--m)}
+.col{flex:1;width:100%;display:flex;align-items:flex-end}
+.col i{display:block;width:100%;min-height:6px;border-radius:10px 10px 4px 4px;background:var(--g)}
+.mini.red{background:rgba(229,56,75,.12);color:#e5384b}
+.tag.bad{background:rgba(229,56,75,.12);color:#e5384b}
+.pos{color:#1fa35a}
+.neg{color:#e5384b}
+.empty{color:var(--m);font-size:15px}
+.tools{display:flex;flex-wrap:wrap;justify-content:center;gap:18px}
+.ghostlink{background:none;border:0;color:var(--m);cursor:pointer;font-family:inherit;font-size:14px}
+.toasts{position:fixed;top:max(14px,env(safe-area-inset-top));left:50%;transform:translateX(-50%);width:min(92vw,380px);display:grid;gap:8px;z-index:30;pointer-events:none}
+.toast{pointer-events:auto;cursor:pointer;display:flex;gap:12px;align-items:center;padding:12px 14px;border-radius:22px;background:rgba(255,255,255,.96);border:1px solid rgba(122,31,255,.08);box-shadow:0 10px 34px rgba(90,40,180,.25);animation:drop .45s cubic-bezier(.2,1.2,.4,1),fade .4s 4.6s forwards}
+.toast b{flex:none;display:grid;place-items:center;width:40px;height:40px;border-radius:12px;background:var(--g);color:#fff;font-size:18px}
+.toast strong{display:block;font-size:16px}
+.toast span{font-size:14px;color:var(--m)}
+@keyframes drop{from{transform:translateY(-30px) scale(.9);opacity:0}}
+@keyframes fade{to{opacity:0;transform:translateY(-12px)}}
+.tabs{position:fixed;left:50%;bottom:max(16px,env(safe-area-inset-bottom));transform:translateX(-50%);display:flex;gap:4px;padding:6px;background:rgba(255,255,255,.03);border:1px solid rgba(255,255,255,.5);border-radius:999px;box-shadow:0 8px 32px rgba(90,40,180,.1),inset 0 1px 1px rgba(255,255,255,.8),inset 0 0 10px rgba(255,255,255,.15);z-index:10}
+.tabs::before,.tabs::after{content:"";position:absolute;inset:0;border-radius:inherit;z-index:-1;pointer-events:none}
+.tabs::before{backdrop-filter:blur(6px) saturate(160%);-webkit-backdrop-filter:blur(6px) saturate(160%)}
+.tabs::after{backdrop-filter:blur(18px) saturate(180%);-webkit-backdrop-filter:blur(18px) saturate(180%);-webkit-mask-image:radial-gradient(ellipse at center,transparent 38%,#000 100%);mask-image:radial-gradient(ellipse at center,transparent 38%,#000 100%)}
+.tabs a{display:flex;flex-direction:column;align-items:center;gap:2px;padding:8px 20px;border-radius:999px;font-size:11px;font-weight:600;color:var(--m);transition:.2s}
+.tabs a.on{background:var(--g);color:#fff}
+.tabs svg{width:22px;height:22px;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round}
+#register .wrap{max-width:520px}
+@media(max-width:480px){.tabs a{padding:8px 13px}}
+@media(min-width:900px){
+.wrap{padding:0 40px}
+section{padding:80px 0 150px}
+.wrap>*+*,.hero>*+*{margin-top:0}
+.hero>*+*{margin-top:20px}
+h1{font-size:clamp(48px,5vw,68px)}
+.lead{font-size:20px}
+#home .wrap{display:grid;grid-template-columns:1.1fr 1fr;gap:64px;align-items:center;min-height:calc(100vh - 230px)}
+#cabinet .wrap{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+#cabinet .lwrap{grid-template-columns:1fr auto;gap:28px}
+#admin .wrap{display:grid;grid-template-columns:1fr 1fr;gap:20px;align-items:start}
+#astats{grid-template-columns:repeat(4,1fr)}
+.w2{grid-column:1/-1}
+.stats{grid-template-columns:repeat(2,1fr)}
+.btn:hover{transform:translateY(-2px)}
+.btn:active{transform:scale(.97)}
+}
+</style>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/qrcode-generator/1.4.4/qrcode.min.js"></script>
+</head>
+<body>
+<nav class="tabs">
+<a href="#/"><svg viewBox="0 0 24 24"><path d="M3 11l9-8 9 8v9a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg>Главная</a>
+<a href="#/register"><svg viewBox="0 0 24 24"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7l-1 1M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7l1-1"/></svg>Ссылка</a>
+<a href="#/cabinet"><svg viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg>Кабинет</a>
+<a href="#/admin"><svg viewBox="0 0 24 24"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>Админ</a>
+</nav>
+<div class="toasts" id="toasts"></div>
+<template id="lt">
+<div class="lwrap">
+<div>
+<div class="codebox"><div><small>Ваш код</small><div class="code"></div></div><button class="btn cp">Копировать ссылку</button></div>
+<p class="url"></p>
+<div class="share"><a class="btn tg" target="_blank" rel="noopener">Поделиться в Telegram</a><a class="btn wa" target="_blank" rel="noopener">Поделиться в WhatsApp</a></div>
+</div>
+<div class="qr"></div>
+</div>
+</template>
+<main>
+
+<section id="home"><div class="wrap">
+<div class="hero">
+<div class="brand">✦ Бонусы друзей</div>
+<h1>Приглашай друзей,<br><span>получай бонусы</span></h1>
+<p class="lead">Поделись своей персональной ссылкой. Когда друг зарегистрируется, вы оба получите по 100 баллов, а за его первую покупку вам — ещё 250 баллов.</p>
+<a class="btn" href="#/register">Получить свою ссылку</a>
+</div>
+<div class="card">
+<div class="step"><b>1</b><div><h3>Получите ссылку</h3><p>Зарегистрируйтесь и сразу получите персональную реферальную ссылку.</p></div></div>
+<div class="step"><b>2</b><div><h3>Поделитесь</h3><p>Отправьте ссылку друзьям в мессенджер или социальную сеть.</p></div></div>
+<div class="step"><b>3</b><div><h3>Получайте бонусы</h3><p>100 баллов вам обоим за регистрацию друга и 250 баллов вам за его первую покупку.</p></div></div>
+</div>
+</div></section>
+
+<section id="register" hidden><div class="wrap">
+<h1>Получи свою ссылку</h1>
+<p class="lead">Заполни форму — это займёт десять секунд.</p>
+<div class="card" id="regForm">
+<form id="reg">
+<div class="field"><label>Имя</label><input name="name" required placeholder="Как вас зовут"></div>
+<div class="field"><label>E-mail</label><input name="email" type="email" required placeholder="you@example.com"></div>
+<div class="field"><label>Телефон</label><input name="phone" type="tel" required placeholder="+7 900 000-00-00"></div>
+<button class="btn full" style="margin-top:6px">Зарегистрироваться</button>
+</form>
+</div>
+<div class="card" id="regDone" hidden>
+<h2>Готово! Ваша ссылка</h2>
+<p class="lead">Отправьте её друзьям. Бонусы начислятся, когда они зарегистрируются.</p>
+<div class="lslot"></div>
+<a class="btn ghost full" href="#/cabinet" style="margin-top:14px">В личный кабинет</a>
+</div>
+</div></section>
+
+<section id="cabinet" hidden><div class="wrap">
+<div class="w2"><h1 id="hi"></h1><p class="lead" id="sub"></p></div>
+<div class="card w2"><h2>Ваша реферальная ссылка</h2><div class="lslot"></div></div>
+<div class="stats w2">
+<div class="card stat"><small>Зарегистрировались</small><strong id="regs">0</strong></div>
+<div class="card stat acc"><small>Баланс баллов</small><strong id="bal">0</strong></div>
+</div>
+<div class="card"><h2>Приглашённые друзья</h2><ul id="friends"></ul></div>
+<div class="card"><h2>История начислений</h2><ul id="hist"></ul></div>
+<div class="tools w2">
+<button class="ghostlink" id="demo">Имитировать приглашённого друга</button>
+<button class="ghostlink" id="reset">Выйти</button>
+</div>
+</div></section>
+
+<section id="admin" hidden><div class="wrap">
+<div class="w2"><h1>Админ-панель</h1><p class="lead">Статистика программы, начисления и управление участниками.</p></div>
+<div class="stats w2" id="astats"></div>
+<div class="card w2"><h2>Рост участников по неделям</h2><p class="lead">Всего участников на конец каждой недели (недели с понедельника).</p><div class="bars" id="bars"></div></div>
+<div class="card">
+<div class="head"><h2>Начисления</h2><button class="mini" id="expA">Экспорт</button></div>
+<div class="filters"><div><label>С даты</label><input type="date" id="from"></div><div><label>По дату</label><input type="date" id="to"></div><button class="ghostlink" id="fReset">Сбросить</button></div>
+<p class="lead" id="asum"></p>
+<ul id="alist" class="scroll"></ul>
+</div>
+<div class="card">
+<div class="head"><h2>Участники</h2><button class="mini" id="expP">Экспорт</button></div>
+<ul id="plist" class="scroll"></ul>
+</div>
+</div></section>
+
+</main>
+<script>
+const $ = s => document.querySelector(s);
+const names = ['Анна','Дмитрий','Мария','Алексей','Ольга','Игорь'];
+const mem = {};
+const get = k => { try { return JSON.parse(localStorage.getItem(k)) } catch { return mem[k] ?? null } };
+const set = (k, v) => { mem[k] = v; try { localStorage.setItem(k, JSON.stringify(v)) } catch {} };
+const load = () => (get('db') || {})[get('me')] || null;
+const save = m => { const db = get('db') || {}; db[m.code] = m; set('db', db) };
+const base = () => /^https?:/.test(location.protocol) ? location.origin : 'https://site.ru';
+const link = c => base() + '/ref/' + c;
+const fmt = t => new Date(t).toLocaleDateString('ru-RU');
+const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]);
+const text = 'Присоединяйся и получай бонусы!';
+const add = (u, t, sum) => u.history.push({date: Date.now(), text: t, sum, new: true});
+const amount = h => (h.sum > 0 ? '+' : '') + h.sum;
+
+function pop(title, t, icon = '✦'){
+  const d = document.createElement('div');
+  d.className = 'toast';
+  d.innerHTML = `<b>${icon}</b><div><strong>${esc(title)}</strong><span>${esc(t)}</span></div>`;
+  d.onclick = () => d.remove();
+  $('#toasts').append(d);
+  setTimeout(() => d.remove(), 5000);
+}
+const toast = h => pop(amount(h) + ' баллов', h.text);
+
+function notify(){
+  const m = load();
+  const n = m ? m.history.filter(h => h.new) : [];
+  if (!n.length) return;
+  n.forEach((h, i) => { setTimeout(() => toast(h), i * 700); delete h.new });
+  save(m);
+}
+
+function newCode(db){
+  const a = 'ABCDEFGHJKLMNPQRSTUVWXYZ23456789';
+  let c;
+  do c = Array.from(crypto.getRandomValues(new Uint8Array(8)), b => a[b % 32]).join(''); while (db[c]);
+  return c;
+}
+
+function qr(t){
+  if (!window.qrcode) return '';
+  const q = qrcode(0, 'M');
+  q.addData(t);
+  q.make();
+  return q.createSvgTag(4, 0);
+}
+
+function track(){
+  const c = (location.pathname + location.hash).match(/\/ref\/([A-Z0-9]{8})/i)?.[1].toUpperCase();
+  if (!c) return;
+  const db = get('db') || {};
+  if (db[c] && !db[c].blocked && !get('ref') && get('me') !== c) {
+    set('ref', c);
+    db[c].clicks++;
+    set('db', db);
+  }
+  try { history.replaceState(null, '', location.pathname.replace(/\/ref\/.*$/, '/')) } catch {}
+}
+
+document.querySelectorAll('.lslot').forEach(s => s.innerHTML = $('#lt').innerHTML);
+track();
+let cur = location.hash.slice(2) || 'home';
+
+function go(r){
+  cur = r;
+  try { location.hash = '#/' + (r === 'home' ? '' : r) } catch {}
+  route();
+}
+
+function route(){
+  const r = ['register', 'cabinet', 'admin'].includes(cur) ? cur : 'home';
+  const m = load();
+  if (m?.blocked) {
+    set('me', null);
+    pop('Аккаунт заблокирован', 'Начисления приостановлены администратором', '⛔');
+    return go('home');
+  }
+  if (r === 'cabinet' && !m) return go('register');
+  document.querySelectorAll('section').forEach(s => s.hidden = s.id !== r);
+  document.querySelectorAll('.tabs a').forEach(a => a.classList.toggle('on', a.getAttribute('href') === '#/' + (r === 'home' ? '' : r)));
+  $('.brand').textContent = get('ref') && !m ? '✦ Вас пригласил друг' : '✦ Бонусы друзей';
+  if (r === 'register') {
+    $('#regForm').hidden = !!m;
+    $('#regDone').hidden = !m;
+  }
+  if (m && r !== 'home') fill(m);
+  if (r === 'cabinet') cabinet(m);
+  if (r === 'admin') { seed(); admin(); }
+  window.scrollTo(0, 0);
+  notify();
+}
+
+function fill(m){
+  const l = link(m.code);
+  document.querySelectorAll('.code').forEach(e => e.textContent = m.code);
+  document.querySelectorAll('.url').forEach(e => e.textContent = l);
+  document.querySelectorAll('.tg').forEach(e => e.href = 'https://t.me/share/url?url=' + encodeURIComponent(l) + '&text=' + encodeURIComponent(text));
+  document.querySelectorAll('.wa').forEach(e => e.href = 'https://wa.me/?text=' + encodeURIComponent(text + ' ' + l));
+  document.querySelectorAll('.qr').forEach(e => e.innerHTML = qr(l));
+}
+
+function cabinet(m){
+  const inv = (get('db') || {})[m.ref];
+  $('#hi').textContent = 'Привет, ' + m.name + '!';
+  $('#sub').textContent = inv ? 'Вас пригласил: ' + inv.name : 'Делитесь ссылкой и следите за бонусами.';
+  $('#regs').textContent = m.friends.length;
+  $('#bal').textContent = m.history.reduce((s, h) => s + h.sum, 0);  $('#friends').innerHTML = m.friends.map((f, i) => `<li class="row"><span>${esc(f.name)}<small>${fmt(f.date)}</small></span><span class="act"><span class="tag">${f.status}</span>${f.bought ? '' : `<button class="mini" data-i="${i}">Имитировать покупку</button>`}</span></li>`).join('') || '<li class="empty">Пока никто не зарегистрировался</li>';
+  $('#hist').innerHTML = m.history.slice().reverse().map(h => `<li class="row"><span>${esc(h.text)}<small>${fmt(h.date)}</small></span><b class="${h.sum < 0 ? 'neg' : 'pos'}">${amount(h)}</b></li>`).join('') || '<li class="empty">Начислений пока нет</li>';
+}
+
+$('#reg').onsubmit = e => {
+  e.preventDefault();
+  const f = e.target, db = get('db') || {}, email = f.email.value.trim().toLowerCase();
+  let u = Object.values(db).find(x => x.email === email);
+  if (u?.blocked) return pop('Аккаунт заблокирован', 'Обратитесь к администратору', '⛔');
+  if (!u) {
+    const name = f.name.value.trim(), ref = get('ref');
+    u = {name, email, phone: f.phone.value.trim(), code: newCode(db), created: Date.now(), clicks: 0, friends: [], history: [], ref: db[ref] && !db[ref].blocked ? ref : null};
+    db[u.code] = u;
+    if (u.ref) {
+      add(u, 'Бонус за регистрацию по приглашению', 100);
+      db[ref].friends.unshift({name, code: u.code, date: Date.now(), status: 'Зарегистрирован'});
+      add(db[ref], 'Бонус за друга: ' + name, 100);
+    } else add(u, 'Бонус за регистрацию', 50);
+    set('db', db);
+    set('ref', null);
+  }
+  set('me', u.code);
+  route();
+};
+
+$('#demo').onclick = () => {
+  const m = load(), n = names[Math.random() * names.length | 0];
+  m.clicks++;
+  m.friends.unshift({name: n, date: Date.now(), status: 'Зарегистрирован'});
+  add(m, 'Бонус за друга: ' + n, 100);
+  save(m);
+  route();
+};
+
+$('#reset').onclick = () => {
+  set('me', null);
+  go('home');
+};
+
+let adm = {};
+const bal = u => u.history.reduce((s, h) => s + h.sum, 0);
+const born = u => u.created ?? Math.min(...u.history.map(h => h.date), Date.now());
+const bought = u => u.friends.filter(f => f.bought || f.status === 'Совершил покупку').length;
+
+function seed(){
+  if (get('seeded')) return;
+  const db = get('db') || {};
+  const N = ['Анна','Дмитрий','Мария','Алексей','Ольга','Игорь','Екатерина','Сергей','Наталья','Андрей','Елена','Павел'];
+  const L = ['Иванова','Петров','Смирнова','Кузнецов','Попова','Соколов','Лебедева','Козлов'];
+  const R = n => Math.random() * n | 0, day = 864e5, now = Date.now();
+  const dates = [];
+  [2, 3, 4, 5, 6, 8, 9, 11].forEach((n, w) => { for (let i = 0; i < n; i++) dates.push(now - (8 - w) * 7 * day + R(7 * day)) });
+  dates.sort((a, b) => a - b).forEach((t, i) => {
+    const name = N[R(N.length)] + ' ' + L[R(L.length)][0] + '.', code = newCode(db);
+    const u = {name, email: 'user' + (i + 1) + '@example.com', phone: `+7 9${10 + R(89)} ${100 + R(899)}-${10 + R(89)}-${10 + R(89)}`, code, created: t, clicks: 0, friends: [], history: [], ref: null, fake: true};
+    const pool = Object.values(db).filter(x => x.fake);
+    const r = pool.length && Math.random() < .6 ? pool[R(pool.length)] : null;
+    if (r) {
+      u.ref = r.code;
+      r.friends.unshift({name, code, date: t, status: 'Зарегистрирован'});
+      r.history.push({date: t, text: 'Бонус за друга: ' + name, sum: 100});
+      u.history.push({date: t, text: 'Бонус за регистрацию по приглашению', sum: 100});
+      if (Math.random() < .45) {
+        r.friends[0].bought = true;
+        r.friends[0].status = 'Совершил покупку';
+        r.history.push({date: Math.min(now, t + (1 + R(10)) * day), text: 'Покупка друга: ' + name, sum: 250});
+      }
+    } else u.history.push({date: t, text: 'Бонус за регистрацию', sum: 50});
+    db[code] = u;
+  });
+  Object.values(db).filter(u => u.fake).forEach(u => u.clicks = u.friends.length * (3 + R(4)));
+  set('db', db);
+  set('seeded', true);
+}
+
+function admin(){
+  const us = Object.values(get('db') || {});
+  const clicks = us.reduce((s, u) => s + u.clicks, 0), regs = us.filter(u => u.ref).length;
+  $('#astats').innerHTML = [['Участники', us.length], ['Переходы', clicks], ['Конверсия', (clicks ? Math.min(100, Math.round(regs / clicks * 100)) : 0) + '%', 1], ['Начислено баллов', us.reduce((s, u) => s + bal(u), 0)]].map(([k, v, a]) => `<div class="card stat${a ? ' acc' : ''}"><small>${k}</small><strong>${v}</strong></div>`).join('');
+
+  const m0 = new Date();
+  m0.setHours(0, 0, 0, 0);
+  m0.setDate(m0.getDate() - (m0.getDay() + 6) % 7);
+  const weeks = Array.from({length: 8}, (_, i) => {
+    const s = new Date(m0);
+    s.setDate(s.getDate() - 7 * (7 - i));
+    const e = new Date(s);
+    e.setDate(e.getDate() + 7);
+    return {s, total: us.filter(u => born(u) < e).length, fresh: us.filter(u => born(u) >= s && born(u) < e).length};
+  });
+  const mx = Math.max(...weeks.map(w => w.total), 1);
+  $('#bars').innerHTML = weeks.map(w => `<div class="bar" title="Новых за неделю: ${w.fresh}"><span>${w.total}</span><div class="col"><i style="height:${w.total / mx * 100}%"></i></div><small>${w.s.toLocaleDateString('ru-RU', {day: '2-digit', month: '2-digit'})}</small></div>`).join('');
+
+  const from = $('#from').value ? new Date($('#from').value + 'T00:00:00').getTime() : -Infinity;
+  const to = $('#to').value ? new Date($('#to').value + 'T23:59:59.999').getTime() : Infinity;
+  adm.acc = us.flatMap(u => u.history.map(h => ({...h, u}))).filter(h => h.date >= from && h.date <= to).sort((a, b) => b.date - a.date);
+  $('#asum').textContent = `Записей: ${adm.acc.length} · сумма: ${adm.acc.reduce((s, h) => s + h.sum, 0)} баллов`;
+  $('#alist').innerHTML = adm.acc.slice(0, 100).map(h => `<li class="row"><span>${esc(h.u.name)}<small>${esc(h.text)} · ${fmt(h.date)}</small></span><b class="pos">${amount(h)}</b></li>`).join('') || '<li class="empty">Нет начислений за выбранный период</li>';
+
+  adm.us = us.sort((a, b) => born(b) - born(a));
+  $('#plist').innerHTML = adm.us.map(u => `<li class="row"><span>${esc(u.name)}${u.blocked ? ' <span class="tag bad">Заблокирован</span>' : ''}<small>${u.code} · друзей: ${u.friends.length} · ${bal(u)} баллов</small></span><button class="mini${u.blocked ? '' : ' red'}" data-b="${u.code}">${u.blocked ? 'Разблокировать' : 'Заблокировать'}</button></li>`).join('');
+}
+
+function csv(head, rows, name){
+  const q = v => '"' + String(typeof v === 'string' && /^(?:[=@]|[+-][^\d\s])/.test(v) ? "'" + v : v).replace(/"/g, '""') + '"';
+  const a = document.createElement('a');
+  a.href = URL.createObjectURL(new Blob(['﻿' + [head, ...rows].map(r => r.map(q).join(';')).join('\r\n')], {type: 'text/csv;charset=utf-8'}));
+  a.download = name;
+  a.click();
+  setTimeout(() => URL.revokeObjectURL(a.href), 1000);
+}
+
+$('#from').onchange = $('#to').onchange = admin;
+$('#fReset').onclick = () => { $('#from').value = $('#to').value = ''; admin() };
+$('#expA').onclick = () => csv(['Дата', 'Участник', 'E-mail', 'Начисление', 'Баллы'], adm.acc.map(h => [new Date(h.date).toLocaleString('ru-RU'), h.u.name, h.u.email, h.text, h.sum]), 'accruals.csv');
+$('#expP').onclick = () => csv(['Имя', 'E-mail', 'Телефон', 'Код', 'Регистрация', 'Пригласил (код)', 'Друзей', 'Покупок друзей', 'Баллов', 'Статус'], adm.us.map(u => [u.name, u.email, u.phone, u.code, new Date(born(u)).toLocaleString('ru-RU'), u.ref || '', u.friends.length, bought(u), bal(u), u.blocked ? 'Заблокирован' : 'Активен']), 'participants.csv');
+
+document.onclick = async e => {
+  const k = e.target.closest('[data-b]');
+  if (k) {
+    const db = get('db'), u = db[k.dataset.b];
+    u.blocked = !u.blocked;
+    set('db', db);
+    return admin();
+  }
+  const a = e.target.closest('a[href^="#/"]');
+  if (a) {
+    e.preventDefault();
+    return go(a.getAttribute('href').slice(2) || 'home');
+  }
+  const p = e.target.closest('.mini[data-i]');
+  if (p) {
+    const m = load(), f = m.friends[p.dataset.i];
+    if (f.bought) return;
+    f.bought = true;
+    f.status = 'Совершил покупку';
+    add(m, 'Покупка друга: ' + f.name, 250);
+    save(m);
+    cabinet(m);
+    return notify();
+  }
+  if (!e.target.matches('.cp')) return;
+  const b = e.target, t = link(load().code);
+  try {
+    await navigator.clipboard.writeText(t);
+  } catch {
+    const x = document.createElement('textarea');
+    x.value = t;
+    document.body.append(x);
+    x.select();
+    document.execCommand('copy');
+    x.remove();
+  }
+  b.textContent = 'Скопировано ✓';
+  setTimeout(() => b.textContent = 'Копировать ссылку', 2000);
+};
+
+addEventListener('hashchange', () => { cur = location.hash.slice(2) || 'home'; route() });
+addEventListener('storage', e => {
+  const m = load();
+  if (e.key !== 'db') return;
+  if (cur === 'admin') admin();
+  if (!m) return;
+  if (m.blocked) return route();
+  if (cur === 'cabinet') cabinet(m);
+  notify();
+});
+route();
+</script>
+</body>
+</html>
