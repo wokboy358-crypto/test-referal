@@ -213,8 +213,7 @@ const get = k => { try { return JSON.parse(localStorage.getItem(k)) } catch { re
 const set = (k, v) => { mem[k] = v; try { localStorage.setItem(k, JSON.stringify(v)) } catch {} };
 const load = () => (get('db') || {})[get('me')] || null;
 const save = m => { const db = get('db') || {}; db[m.code] = m; set('db', db) };
-const base = () => /^https?:/.test(location.protocol) ? location.origin : 'https://site.ru';
-const link = c => base() + '/ref/' + c;
+const link = c => (/^https?:/.test(location.protocol) ? location.origin + location.pathname.replace(/[^/]*$/, '') : 'https://site.ru/') + 'ref/' + c;
 const fmt = t => new Date(t).toLocaleDateString('ru-RU');
 const esc = s => s.replace(/[&<>"]/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'})[c]);
 const text = 'Присоединяйся и получай бонусы!';
