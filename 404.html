@@ -67,11 +67,13 @@ label{display:block;font-size:13px;font-weight:600;color:var(--m);margin:0 4px 6
 .mini:active{transform:scale(.94)}
 .head{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-bottom:14px}
 .head h2{margin:0}
-.filters{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;margin-bottom:12px}
-.filters>div{flex:1 1 130px;min-width:0}
-.filters input{font-size:15px;padding:12px;min-width:0;max-width:100%}
-.filters .ghostlink{flex:1 1 100%;text-align:left;padding:0 4px}
-@media(min-width:900px){.filters .ghostlink{flex:none}}
+.filters{display:grid;grid-template-columns:minmax(0,1fr) minmax(0,1fr);gap:10px;align-items:end;margin-bottom:12px}
+.filters>div{min-width:0}
+.filters input{display:block;box-sizing:border-box;width:100%;min-width:0;max-width:100%;font-size:15px;padding:12px 8px;-webkit-appearance:none;appearance:none;overflow:hidden;text-align:left;min-height:46px}
+.filters input::-webkit-date-and-time-value{text-align:left;min-width:0}
+.filters input::-webkit-datetime-edit{padding:0}
+.filters .ghostlink{grid-column:1/-1;text-align:left;padding:0 4px}
+@media(min-width:900px){.filters{grid-template-columns:200px 200px auto}.filters .ghostlink{grid-column:auto}}
 .scroll{max-height:420px;overflow-y:auto;margin:0 -6px;padding:0 6px}
 .bars{display:flex;gap:8px;height:230px}
 .bar{flex:1;display:flex;flex-direction:column;align-items:center;gap:6px;min-width:0}
